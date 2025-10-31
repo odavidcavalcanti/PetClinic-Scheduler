@@ -1,5 +1,6 @@
 package com.app.petclinic_scheduler.model;
 
+import com.app.petclinic_scheduler.dto.customer.CustomerRequestDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -36,5 +37,12 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private List<Pet> pets;
+
+    public Customer(CustomerRequestDTO customerData) {
+        this.name = customerData.name();
+        this.email = customerData.email();
+        this.address = customerData.address();
+        this.phoneNumber = customerData.phoneNumber();
+    }
 }
 

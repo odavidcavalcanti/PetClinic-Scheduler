@@ -1,5 +1,6 @@
 package com.app.petclinic_scheduler.model;
 
+import com.app.petclinic_scheduler.dto.scheduling.SchedulingRequestDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
 import lombok.Getter;
@@ -38,4 +39,11 @@ public class Scheduling {
             joinColumns = @JoinColumn(name = "scheduling_id"),
             inverseJoinColumns = @JoinColumn(name = "provided_service_id"))
     private List<ProvidedService> providedServices;
+
+    public Scheduling(SchedulingRequestDTO schedulingData) {
+        this.dateTime = schedulingData.dateTime();
+        this.status = schedulingData.status();
+        this.pet = schedulingData.pet();
+        this.providedServices = schedulingData.providedServices();
+    }
 }

@@ -1,5 +1,6 @@
 package com.app.petclinic_scheduler.model;
 
+import com.app.petclinic_scheduler.dto.provided_services.ProvidedServicesRequestDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -33,7 +34,14 @@ public class ProvidedService {
     @Positive
     private Integer durationInMinutes;
 
-    @ManyToMany(mappedBy = "providedServices")
+    @ManyToMany(mappedBy = "providedService")
     private List<Scheduling> schedulings;
+
+    public ProvidedService(ProvidedServicesRequestDTO providedServiceData) {
+        this.description = providedServiceData.description();
+        this.price = providedServiceData.price();
+        this.durationInMinutes = providedServiceData.durationInMinutes();
+        this.schedulings = providedServiceData.schedulings();
+    }
 
 }
