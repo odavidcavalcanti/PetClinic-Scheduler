@@ -11,5 +11,5 @@ public record SchedulingRequestDTO(
         LocalDateTime dateTime,
         SchedulingStatus status,
         Pet pet,
-        List<ProvidedService> services) {
+        List<ProvidedService> providedServices) {
 }

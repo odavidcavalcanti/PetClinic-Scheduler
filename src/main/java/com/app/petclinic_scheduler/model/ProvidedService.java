@@ -34,7 +34,7 @@ public class ProvidedService {
     @Positive
     private Integer durationInMinutes;
 
-    @ManyToMany(mappedBy = "providedService")
+    @ManyToMany(mappedBy = "providedServices")
     private List<Scheduling> schedulings;
 
     public ProvidedService(ProvidedServicesRequestDTO providedServiceData) {

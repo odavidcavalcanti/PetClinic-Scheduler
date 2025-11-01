@@ -44,12 +44,12 @@ public class Pet {
     @OneToMany(mappedBy = "pet")
     private List<Scheduling> schedulings;
 
-    public Pet(PetRequestDTO petData) {
+    public Pet(PetRequestDTO petData, Customer customer) {
         this.name = petData.name();
         this.specie = petData.specie();
         this.breed = petData.breed();
+        this.customer = customer;
         this.age = petData.age();
-        this.customer = petData.customer();
     }
 
 }
