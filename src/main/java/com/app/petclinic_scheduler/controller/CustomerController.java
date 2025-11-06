@@ -21,20 +21,43 @@ public class CustomerController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<CustomerResponseDTO> getCustomers() {
-        return customerService.getAll();
+    public List<CustomerResponseDTO> getAllCustomers() {
+        return customerService
+                .getAllCustomers();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<CustomerResponseDTO> getCustomerById(@PathVariable UUID id) {
-        return customerService.findById(id);
+    public Optional<CustomerResponseDTO> findById(@PathVariable UUID id) {
+        return customerService
+                .findById(id);
+    }
+
+    @GetMapping("/cpf/{cpf}")
+    @ResponseStatus(HttpStatus.OK)
+    public Optional<CustomerResponseDTO> findByCpf(@PathVariable String cpf) {
+        return customerService
+                .findByCpf(cpf);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void saveCustomer(@RequestBody CustomerRequestDTO customerData) {
-        customerService.save(customerData);
+        customerService
+                .saveCustomer(customerData);
     }
 
+    @PutMapping("/id/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateCustomer (@PathVariable UUID id, @RequestBody CustomerRequestDTO updatedData) {
+        customerService
+                .updateCustomer(id, updatedData);
+    }
+
+    @DeleteMapping("/id/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCustomer(@PathVariable UUID id) {
+        customerService
+                .deleteCustomer(id);
+    }
 }

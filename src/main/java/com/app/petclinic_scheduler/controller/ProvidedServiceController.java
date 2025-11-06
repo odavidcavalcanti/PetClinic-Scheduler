@@ -1,7 +1,7 @@
 package com.app.petclinic_scheduler.controller;
 
-import com.app.petclinic_scheduler.dto.provided_services.ProvidedServicesRequestDTO;
-import com.app.petclinic_scheduler.dto.provided_services.ProvidedServicesResponseDTO;
+import com.app.petclinic_scheduler.dto.provided_services.ProvidedServiceRequestDTO;
+import com.app.petclinic_scheduler.dto.provided_services.ProvidedServiceResponseDTO;
 import com.app.petclinic_scheduler.service.ServiceProvideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @CrossOrigin(allowedHeaders = "*", origins = "*")
 @RestController
-@RequestMapping("/petclinic/provided_service")
+@RequestMapping("/petclinic/services")
 public class ProvidedServiceController {
 
     @Autowired
@@ -21,19 +21,35 @@ public class ProvidedServiceController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ProvidedServicesResponseDTO> getProvidedServices() {
-        return providedService.getAllServices();
+    public List<ProvidedServiceResponseDTO> getAllProvidedServices() {
+        return providedService
+                .getAllProvidedServices();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<ProvidedServicesResponseDTO> getProvidedServiceById(@PathVariable UUID id) {
-        return providedService.findById(id);
+    public Optional<ProvidedServiceResponseDTO> findById(@PathVariable UUID id) {
+        return providedService
+                .findById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createProvidedService(@RequestBody ProvidedServicesRequestDTO providedServicesRequestDTO) {
-        providedService.saveService(providedServicesRequestDTO);
+    public void createProvidedService(@RequestBody ProvidedServiceRequestDTO providedServiceRequestDTO) {
+        providedService
+                .saveProvidedService(providedServiceRequestDTO);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateProvidedService (@PathVariable UUID id, @RequestBody ProvidedServiceRequestDTO providedServiceRequestDTO) {
+        providedService
+                .updateProvidedService(id, providedServiceRequestDTO);
+    }
+
+    @DeleteMapping("/{id}")
+        public void deleteProvidedService (@PathVariable UUID id, @RequestBody ProvidedServiceRequestDTO providedServiceRequestDTO) {
+        providedService
+                .deleteProvidedService(id);
     }
 }

@@ -1,13 +1,11 @@
 package com.app.petclinic_scheduler.dto.provided_services;
 
-import com.app.petclinic_scheduler.model.Scheduling;
-
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.UUID;
 
 public record ProvidedServicesRequestDTO(
         String description,
         BigDecimal price,
         Integer durationInMinutes,
-        List<Scheduling> schedulings) {
+        UUID schedulingId) {
 }

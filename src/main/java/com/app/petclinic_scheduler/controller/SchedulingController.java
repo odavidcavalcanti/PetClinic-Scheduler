@@ -21,20 +21,36 @@ public class SchedulingController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<SchedulingResponseDTO> getSchedulings() {
-      return schedulingService.getAllSchedulings();
+    public List<SchedulingResponseDTO> getAllSchedulings() {
+      return schedulingService
+              .getAllSchedulings();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<SchedulingResponseDTO> getSchedulingById(@PathVariable UUID id) {
-        return schedulingService.getSchedulingById(id);
+    public Optional<SchedulingResponseDTO> findById(@PathVariable UUID id) {
+        return schedulingService
+                .findById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void saveScheduling(@RequestBody SchedulingRequestDTO schedulingRequestDTO) {
-        schedulingService.saveScheduling(schedulingRequestDTO);
+        schedulingService
+                .saveScheduling(schedulingRequestDTO);
     }
 
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateScheduling(@PathVariable UUID id, @RequestBody SchedulingRequestDTO updateData) {
+        schedulingService
+                .updateScheduling(id, updateData);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteScheduling(@PathVariable UUID id) {
+        schedulingService
+                .deleteScheduling(id);
+    }
 }

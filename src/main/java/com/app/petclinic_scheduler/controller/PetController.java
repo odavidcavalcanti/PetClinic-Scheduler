@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@CrossOrigin(allowedHeaders = "*", origins = "*")
 @RestController
 @RequestMapping("/petclinic/pets")
 public class PetController {
@@ -18,28 +19,38 @@ public class PetController {
     @Autowired
     private PetService petService;
 
-    @CrossOrigin(allowedHeaders = "*", origins = "*")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<PetResponseDTO> getAllPets() {
-        return petService.getAllPets();
+        return petService
+                .getAllPets();
     }
 
-    @CrossOrigin(allowedHeaders = "*", origins = "*")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<PetResponseDTO> getPetById(UUID id) {
-        return petService.getPetById(id);
+        return petService
+                .getPetById(id);
     }
 
-    @CrossOrigin(allowedHeaders = "*", origins = "*")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void savePet(@RequestBody PetRequestDTO petData) {
-        petService.savePet(petData);
+        petService
+                .savePet(petData);
     }
 
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updatePet(@PathVariable UUID id, @RequestBody PetRequestDTO petData) {
+        petService
+                .updatePet(id, petData);
+    }
 
-
-
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePet(@PathVariable UUID id) {
+        petService
+                .deletePet(id);
+    }
 }
