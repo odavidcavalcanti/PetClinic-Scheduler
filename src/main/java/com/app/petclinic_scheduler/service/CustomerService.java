@@ -17,7 +17,7 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public List<CustomerResponseDTO> getAll() {
+    public List<CustomerResponseDTO> getAllCustomers() {
         return customerRepository
                         .findAll()
                         .stream()
@@ -30,10 +30,39 @@ public class CustomerService {
                 .map(CustomerResponseDTO::new);
     }
 
-    public void save(CustomerRequestDTO customerData) {
-        customerRepository.save(new Customer(customerData));
+    public Optional<CustomerResponseDTO> findByCpf(String cpf) {
+        return customerRepository
+                .findByCpf(cpf)
+                .map(CustomerResponseDTO::new);
     }
 
+    public void saveCustomer(CustomerRequestDTO customerData) {
+        customerRepository
+                .save(new Customer(customerData));
+    }
 
+    public void updateCustomer (UUID id, CustomerRequestDTO updatedData) {
+        Customer existingCustomer = customerRepository
+                .findById(id)
+                .orElseThrow();
 
+        existingCustomer
+                .setCpf(updatedData.cpf());
+        existingCustomer
+                .setName(updatedData.name());
+        existingCustomer
+                .setEmail(updatedData.email());
+        existingCustomer
+                .setAddress(updatedData.address());
+        existingCustomer
+                .setPhoneNumber(updatedData.phoneNumber());
+
+        customerRepository
+                .save(existingCustomer);
+    }
+
+    public void deleteCustomer(UUID id) {
+        customerRepository
+                .deleteById(id);
+    }
 }
