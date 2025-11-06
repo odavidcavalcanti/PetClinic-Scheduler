@@ -6,19 +6,19 @@ import com.app.petclinic_scheduler.model.Scheduling;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-public record ProvidedServicesResponseDTO(
+public record ProvidedServiceResponseDTO(
         UUID id,
         String description,
         BigDecimal price,
         Integer durationInMinutes,
-        Scheduling scheduling) {
+        String scheduling) {
 
-    public ProvidedServicesResponseDTO(ProvidedService providedService) {
+    public ProvidedServiceResponseDTO(ProvidedService providedService) {
         this(
                 providedService.getId(),
                 providedService.getDescription(),
                 providedService.getPrice(),
                 providedService.getDurationInMinutes(),
-                providedService.getScheduling());
+                providedService.getScheduling().getId().toString());
     }
 }

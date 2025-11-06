@@ -13,7 +13,8 @@ public record SchedulingResponseDTO(
         UUID id,
         LocalDateTime dateTime,
         SchedulingStatus status,
-        Pet pet,
+        String petName,
+        String petBreed,
         List<ProvidedService> providedServices) {
 
     public SchedulingResponseDTO(Scheduling scheduling) {
@@ -21,7 +22,8 @@ public record SchedulingResponseDTO(
                 scheduling.getId(),
                 scheduling.getDateTime(),
                 scheduling.getStatus(),
-                scheduling.getPet(),
+                scheduling.getPet().getName(),
+                scheduling.getPet().getBreed(),
                 scheduling.getProvidedServices());
     }
 }

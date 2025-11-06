@@ -1,6 +1,5 @@
 package com.app.petclinic_scheduler.dto.pet;
 
-import com.app.petclinic_scheduler.model.Customer;
 import com.app.petclinic_scheduler.model.Pet;
 import com.app.petclinic_scheduler.model.Scheduling;
 
@@ -13,7 +12,8 @@ public record PetResponseDTO(
         String specie,
         String breed,
         Integer age,
-        Customer customer,
+        String customerCpf,
+        String customerName,
         List<Scheduling> schedulings) {
 
     public PetResponseDTO(Pet pet) {
@@ -23,9 +23,8 @@ public record PetResponseDTO(
                 pet.getSpecie(),
                 pet.getBreed(),
                 pet.getAge(),
-                pet.getCustomer(),
-                pet.getSchedulings()
-        );
+                pet.getCustomer().getCpf(),
+                pet.getCustomer().getName(),
+                pet.getSchedulings());
     }
-
 }
