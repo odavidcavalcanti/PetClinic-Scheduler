@@ -33,17 +33,12 @@ public class Scheduling {
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
-    @ManyToMany
-    @JoinTable(
-            name = "scheduling_services",
-            joinColumns = @JoinColumn(name = "scheduling_id"),
-            inverseJoinColumns = @JoinColumn(name = "provided_service_id"))
+    @OneToMany(mappedBy = "scheduling", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProvidedService> providedServices;
 
-    public Scheduling(SchedulingRequestDTO schedulingData) {
+    public Scheduling(SchedulingRequestDTO schedulingData,Pet pet) {
         this.dateTime = schedulingData.dateTime();
         this.status = schedulingData.status();
-        this.pet = schedulingData.pet();
-        this.providedServices = schedulingData.providedServices();
+        this.pet = pet;
     }
 }

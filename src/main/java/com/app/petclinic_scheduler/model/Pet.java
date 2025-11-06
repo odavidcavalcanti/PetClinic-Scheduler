@@ -41,15 +41,14 @@ public class Pet {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "pet")
+    @OneToMany(mappedBy = "pet", cascade =  CascadeType.ALL, orphanRemoval = true)
     private List<Scheduling> schedulings;
 
     public Pet(PetRequestDTO petData, Customer customer) {
         this.name = petData.name();
         this.specie = petData.specie();
         this.breed = petData.breed();
-        this.customer = customer;
         this.age = petData.age();
+        this.customer = customer;
     }
-
 }

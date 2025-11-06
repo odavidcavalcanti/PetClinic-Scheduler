@@ -1,6 +1,6 @@
 package com.app.petclinic_scheduler.model;
 
-import com.app.petclinic_scheduler.dto.provided_services.ProvidedServicesRequestDTO;
+import com.app.petclinic_scheduler.dto.provided_services.ProvidedServiceRequestDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 
 @Table (name = "provided_service")
@@ -34,14 +33,14 @@ public class ProvidedService {
     @Positive
     private Integer durationInMinutes;
 
-    @ManyToMany(mappedBy = "providedServices")
-    private List<Scheduling> schedulings;
+    @ManyToOne
+    @JoinColumn (name = "scheduling_id")
+    private Scheduling scheduling;
 
-    public ProvidedService(ProvidedServicesRequestDTO providedServiceData) {
+    public ProvidedService(ProvidedServiceRequestDTO providedServiceData, Scheduling scheduling) {
         this.description = providedServiceData.description();
         this.price = providedServiceData.price();
         this.durationInMinutes = providedServiceData.durationInMinutes();
-        this.schedulings = providedServiceData.schedulings();
+        this.scheduling = scheduling;
     }
-
 }

@@ -17,8 +17,12 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Customer {
 
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(length = 11, unique = true, nullable = false)
+    private String cpf;
 
     @Column(nullable = false)
     @Size(min = 3)
@@ -35,14 +39,14 @@ public class Customer {
     @Size(min = 3)
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pet> pets;
 
     public Customer(CustomerRequestDTO customerData) {
+        this.cpf = customerData.cpf();
         this.name = customerData.name();
         this.email = customerData.email();
         this.address = customerData.address();
         this.phoneNumber = customerData.phoneNumber();
     }
 }
-
