@@ -29,7 +29,7 @@ public class CustomerController {
 
     @GetMapping("/id/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<CustomerSummaryDTO> findById(@PathVariable UUID id) {
+    public Optional<CustomerResponseDTO> findById(@PathVariable UUID id) {
         return customerService
                 .findById(id);
     }
