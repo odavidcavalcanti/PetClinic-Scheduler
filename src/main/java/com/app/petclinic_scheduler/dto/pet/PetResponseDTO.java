@@ -1,7 +1,8 @@
 package com.app.petclinic_scheduler.dto.pet;
 
+import com.app.petclinic_scheduler.dto.customer.CustomerSummaryDTO;
+import com.app.petclinic_scheduler.dto.scheduling.SchedulingResponseDTO;
 import com.app.petclinic_scheduler.model.Pet;
-import com.app.petclinic_scheduler.model.Scheduling;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,9 +13,8 @@ public record PetResponseDTO(
         String specie,
         String breed,
         Integer age,
-        String customerCpf,
-        String customerName,
-        List<Scheduling> schedulings) {
+        List<SchedulingResponseDTO> schedulings,
+        CustomerSummaryDTO customer) {
 
     public PetResponseDTO(Pet pet) {
         this(
@@ -23,8 +23,11 @@ public record PetResponseDTO(
                 pet.getSpecie(),
                 pet.getBreed(),
                 pet.getAge(),
-                pet.getCustomer().getCpf(),
-                pet.getCustomer().getName(),
-                pet.getSchedulings());
+                pet.getSchedulings()
+                        .stream()
+                        .map(SchedulingResponseDTO::new)
+                        .toList(),
+                new CustomerSummaryDTO(pet
+                        .getCustomer()));
     }
 }
