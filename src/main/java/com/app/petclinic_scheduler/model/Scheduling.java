@@ -1,6 +1,7 @@
 package com.app.petclinic_scheduler.model;
 
 import com.app.petclinic_scheduler.dto.scheduling.SchedulingRequestDTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class Scheduling {
 
     @Column(nullable = false)
     @FutureOrPresent
+    @JsonFormat(shape =  JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime dateTime;
 
     @Enumerated(EnumType.STRING)
