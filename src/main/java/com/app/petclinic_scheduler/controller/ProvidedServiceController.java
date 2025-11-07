@@ -2,6 +2,7 @@ package com.app.petclinic_scheduler.controller;
 
 import com.app.petclinic_scheduler.dto.provided_services.ProvidedServiceRequestDTO;
 import com.app.petclinic_scheduler.dto.provided_services.ProvidedServiceResponseDTO;
+import com.app.petclinic_scheduler.dto.provided_services.ProvidedServiceSummaryDTO;
 import com.app.petclinic_scheduler.service.ServiceProvideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class ProvidedServiceController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ProvidedServiceResponseDTO> getAllProvidedServices() {
+    public List<ProvidedServiceSummaryDTO> getAllProvidedServices() {
         return providedService
                 .getAllProvidedServices();
     }
@@ -35,7 +36,7 @@ public class ProvidedServiceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createProvidedService(@RequestBody ProvidedServiceRequestDTO providedServiceRequestDTO) {
+    public void saveProvidedService(@RequestBody ProvidedServiceRequestDTO providedServiceRequestDTO) {
         providedService
                 .saveProvidedService(providedServiceRequestDTO);
     }

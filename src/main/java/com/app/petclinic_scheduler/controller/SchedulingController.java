@@ -2,6 +2,7 @@ package com.app.petclinic_scheduler.controller;
 
 import com.app.petclinic_scheduler.dto.scheduling.SchedulingRequestDTO;
 import com.app.petclinic_scheduler.dto.scheduling.SchedulingResponseDTO;
+import com.app.petclinic_scheduler.dto.scheduling.SchedulingSummaryDTO;
 import com.app.petclinic_scheduler.service.SchedulingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class SchedulingController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<SchedulingResponseDTO> getAllSchedulings() {
+    public List<SchedulingSummaryDTO> getAllSchedulings() {
       return schedulingService
               .getAllSchedulings();
     }

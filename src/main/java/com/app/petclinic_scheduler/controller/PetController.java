@@ -2,6 +2,7 @@ package com.app.petclinic_scheduler.controller;
 
 import com.app.petclinic_scheduler.dto.pet.PetRequestDTO;
 import com.app.petclinic_scheduler.dto.pet.PetResponseDTO;
+import com.app.petclinic_scheduler.dto.pet.PetSummaryDTO;
 import com.app.petclinic_scheduler.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,14 +22,14 @@ public class PetController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<PetResponseDTO> getAllPets() {
+    public List<PetSummaryDTO> getAllPets() {
         return petService
                 .getAllPets();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<PetResponseDTO> getPetById(UUID id) {
+    public Optional<PetResponseDTO> getPetById(@PathVariable UUID id) {
         return petService
                 .getPetById(id);
     }
