@@ -2,6 +2,7 @@ package com.app.petclinic_scheduler.service;
 
 import com.app.petclinic_scheduler.dto.provided_services.ProvidedServiceRequestDTO;
 import com.app.petclinic_scheduler.dto.provided_services.ProvidedServiceResponseDTO;
+import com.app.petclinic_scheduler.dto.provided_services.ProvidedServiceSummaryDTO;
 import com.app.petclinic_scheduler.model.ProvidedService;
 import com.app.petclinic_scheduler.model.Scheduling;
 import com.app.petclinic_scheduler.repository.ProvidedServiceRepository;
@@ -22,11 +23,11 @@ public class ServiceProvideService {
     @Autowired
     private SchedulingRepository schedulingRepository;
 
-    public List<ProvidedServiceResponseDTO> getAllProvidedServices() {
+    public List<ProvidedServiceSummaryDTO> getAllProvidedServices() {
         return providedServiceRepository
                 .findAll()
                 .stream()
-                .map(ProvidedServiceResponseDTO::new)
+                .map(ProvidedServiceSummaryDTO::new)
                 .toList();
     }
 

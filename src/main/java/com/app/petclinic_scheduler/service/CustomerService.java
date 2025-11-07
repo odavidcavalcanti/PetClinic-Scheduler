@@ -2,6 +2,7 @@ package com.app.petclinic_scheduler.service;
 
 import com.app.petclinic_scheduler.dto.customer.CustomerRequestDTO;
 import com.app.petclinic_scheduler.dto.customer.CustomerResponseDTO;
+import com.app.petclinic_scheduler.dto.customer.CustomerSummaryDTO;
 import com.app.petclinic_scheduler.model.Customer;
 import com.app.petclinic_scheduler.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,11 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public List<CustomerResponseDTO> getAllCustomers() {
+    public List<CustomerSummaryDTO> getAllCustomers() {
         return customerRepository
                         .findAll()
                         .stream()
-                        .map(CustomerResponseDTO::new).toList();
+                        .map(CustomerSummaryDTO::new).toList();
     }
 
     public Optional<CustomerResponseDTO> findById(UUID id) {

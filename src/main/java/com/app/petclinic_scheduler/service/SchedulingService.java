@@ -1,7 +1,9 @@
 package com.app.petclinic_scheduler.service;
 
+import com.app.petclinic_scheduler.dto.provided_services.ProvidedServiceSummaryDTO;
 import com.app.petclinic_scheduler.dto.scheduling.SchedulingRequestDTO;
 import com.app.petclinic_scheduler.dto.scheduling.SchedulingResponseDTO;
+import com.app.petclinic_scheduler.dto.scheduling.SchedulingSummaryDTO;
 import com.app.petclinic_scheduler.model.Pet;
 import com.app.petclinic_scheduler.model.Scheduling;
 import com.app.petclinic_scheduler.repository.PetRepository;
@@ -22,11 +24,11 @@ public class SchedulingService {
     @Autowired
     private PetRepository petRepository;
 
-    public List<SchedulingResponseDTO> getAllSchedulings() {
+    public List<SchedulingSummaryDTO> getAllSchedulings() {
         return schedulingRepository
                 .findAll()
                 .stream()
-                .map(SchedulingResponseDTO::new)
+                .map(SchedulingSummaryDTO::new)
                 .toList();
     }
 

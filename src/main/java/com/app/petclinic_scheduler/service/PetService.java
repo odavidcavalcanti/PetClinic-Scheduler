@@ -2,6 +2,7 @@ package com.app.petclinic_scheduler.service;
 
 import com.app.petclinic_scheduler.dto.pet.PetRequestDTO;
 import com.app.petclinic_scheduler.dto.pet.PetResponseDTO;
+import com.app.petclinic_scheduler.dto.pet.PetSummaryDTO;
 import com.app.petclinic_scheduler.model.Customer;
 import com.app.petclinic_scheduler.model.Pet;
 import com.app.petclinic_scheduler.repository.*;
@@ -13,18 +14,18 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class PetService {
+public class  PetService {
 
     @Autowired
     private PetRepository petRepository;
     @Autowired
     private CustomerRepository customerRepository;
 
-    public List<PetResponseDTO> getAllPets() {
+    public List<PetSummaryDTO> getAllPets() {
         return petRepository
                 .findAll()
                 .stream()
-                .map(PetResponseDTO::new)
+                .map(PetSummaryDTO::new)
                 .toList();
     }
 
