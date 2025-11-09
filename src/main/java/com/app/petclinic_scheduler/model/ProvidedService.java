@@ -43,4 +43,10 @@ public class ProvidedService {
         this.durationInMinutes = providedServiceData.durationInMinutes();
         this.scheduling = scheduling;
     }
+
+    public void updateFromDTO(ProvidedServiceRequestDTO providedServiceData) {
+        this.description = providedServiceData.description();
+        this.price = providedServiceData.price();
+        this.durationInMinutes = providedServiceData.durationInMinutes();
+    }
 }

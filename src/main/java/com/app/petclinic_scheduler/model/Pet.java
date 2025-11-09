@@ -51,4 +51,11 @@ public class Pet {
         this.age = petData.age();
         this.customer = customer;
     }
+
+    public void updateFromDTO(PetRequestDTO petData) {
+        this.name = petData.name();
+        this.specie = petData.specie();
+        this.breed = petData.breed();
+        this.age = petData.age();
+    }
 }

@@ -49,4 +49,12 @@ public class Customer {
         this.address = customerData.address();
         this.phoneNumber = customerData.phoneNumber();
     }
+
+    public void UpdateFromDTO(CustomerRequestDTO customerData){
+        this.cpf = customerData.cpf();
+        this.name = customerData.name();
+        this.email = customerData.email();
+        this.address = customerData.address();
+        this.phoneNumber = customerData.phoneNumber();
+    }
 }

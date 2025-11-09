@@ -43,4 +43,9 @@ public class Scheduling {
         this.status = schedulingData.status();
         this.pet = pet;
     }
+
+    public void updateFromDTO(SchedulingRequestDTO schedulingData) {
+        this.dateTime = schedulingData.dateTime();
+        this.status = schedulingData.status();
+    }
 }
