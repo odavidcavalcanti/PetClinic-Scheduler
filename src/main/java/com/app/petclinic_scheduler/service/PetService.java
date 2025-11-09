@@ -3,6 +3,8 @@ package com.app.petclinic_scheduler.service;
 import com.app.petclinic_scheduler.dto.pet.PetRequestDTO;
 import com.app.petclinic_scheduler.dto.pet.PetResponseDTO;
 import com.app.petclinic_scheduler.dto.pet.PetSummaryDTO;
+import com.app.petclinic_scheduler.exception.BussinesException;
+import com.app.petclinic_scheduler.exception.ResourceNotFoundException;
 import com.app.petclinic_scheduler.model.Customer;
 import com.app.petclinic_scheduler.model.Pet;
 import com.app.petclinic_scheduler.repository.*;
@@ -30,40 +32,44 @@ public class  PetService {
     }
 
     public Optional<PetResponseDTO> getPetById(UUID id) {
+        if(!petRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Pet com o id: " + id + " não encontrado");
+        }
+
         return petRepository
                 .findById(id)
                 .map(PetResponseDTO::new);
     }
 
     public void savePet(PetRequestDTO petData) {
-        Optional<Customer> customer = customerRepository
-                .findByCpf(petData
-                        .customerCpf());
+       String customerCpf = petData.customerCpf();
+
+        Customer customer = customerRepository
+                .findByCpf(customerCpf)
+                .orElseThrow(() -> new BussinesException(
+                        "Cliente com o cpf: " + customerCpf + " não encontrado"));
 
         petRepository
-                .save(new Pet(petData, customer
-                        .orElseThrow()));
+                .save(new Pet(petData, customer));
     }
 
     public void updatePet (UUID id, PetRequestDTO updateData) {
         Pet existingPet = petRepository
                 .findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("Pet com o id: " + id + " não encontrado"));
 
-        existingPet
-                .setName(updateData.name());
-        existingPet
-                .setSpecie(updateData.specie());
-        existingPet
-                .setBreed(updateData.breed());
-        existingPet
-                .setAge(updateData.age());
+        existingPet.updateFromDTO(updateData);
 
         petRepository
                 .save(existingPet);
     }
 
     public void deletePet(UUID id) {
+
+        if (!petRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Pet com o id: " + id + " não encontrado");
+        }
+
         petRepository
                 .deleteById(id);
     }

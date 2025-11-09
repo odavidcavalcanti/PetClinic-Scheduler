@@ -1,9 +1,10 @@
 package com.app.petclinic_scheduler.service;
 
-import com.app.petclinic_scheduler.dto.provided_services.ProvidedServiceSummaryDTO;
 import com.app.petclinic_scheduler.dto.scheduling.SchedulingRequestDTO;
 import com.app.petclinic_scheduler.dto.scheduling.SchedulingResponseDTO;
 import com.app.petclinic_scheduler.dto.scheduling.SchedulingSummaryDTO;
+import com.app.petclinic_scheduler.exception.BussinesException;
+import com.app.petclinic_scheduler.exception.ResourceNotFoundException;
 import com.app.petclinic_scheduler.model.Pet;
 import com.app.petclinic_scheduler.model.Scheduling;
 import com.app.petclinic_scheduler.repository.PetRepository;
@@ -33,36 +34,40 @@ public class SchedulingService {
     }
 
     public Optional<SchedulingResponseDTO> findById(UUID id) {
+        if(!schedulingRepository.existsById(id)) {
+            throw  new  ResourceNotFoundException("Agendamento com o id: " + id + " não encontrado");
+        }
+
         return schedulingRepository
                 .findById(id)
                 .map(SchedulingResponseDTO::new);
     }
 
     public void saveScheduling(SchedulingRequestDTO schedulingData) {
-        Optional<Pet> pet = petRepository
-                .findById(schedulingData
-                        .petId());
+        UUID petId = schedulingData.petId();
 
+        Pet pet = petRepository
+                .findById(petId)
+                .orElseThrow(() -> new BussinesException("Pet com o id: " + petId + " não encontrado"));
 
         schedulingRepository
-                .save(new Scheduling(schedulingData, pet
-                        .orElseThrow()));
+                .save(new Scheduling(schedulingData, pet));
     }
 
     public void updateScheduling(UUID id, SchedulingRequestDTO updateData) {
         Scheduling existingScheduling = schedulingRepository
                 .findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("Agendamento com o id: " + id + " não encontrado"));
 
-        existingScheduling
-                .setDateTime(updateData.dateTime());
-        existingScheduling
-                .setStatus(updateData.status());
-
+        existingScheduling.updateFromDTO(updateData);
         schedulingRepository.save(existingScheduling);
     }
 
     public void deleteScheduling(UUID id) {
+        if(!schedulingRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Agendamento com o id: " + id + " não encontrado");
+        }
+
         schedulingRepository.deleteById(id);
     }
 }
