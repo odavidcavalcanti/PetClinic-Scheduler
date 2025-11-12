@@ -7,7 +7,7 @@ import com.app.petclinic_scheduler.exception.BussinesException;
 import com.app.petclinic_scheduler.exception.ResourceNotFoundException;
 import com.app.petclinic_scheduler.model.Customer;
 import com.app.petclinic_scheduler.repository.CustomerRepository;
-import com.app.petclinic_scheduler.util.TestDataFactory;
+import com.app.petclinic_scheduler.util.CustomerTestDataFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -37,8 +37,8 @@ public class CustomerServiceTest {
 
     @Test
     void shouldReturnAllCostumer() {
-        Customer joao = TestDataFactory.createCustomer("12345678900","João");
-        Customer maria = TestDataFactory.createCustomer("12345678911","Maria");
+        Customer joao = CustomerTestDataFactory.createCustomer("12345678900","João");
+        Customer maria = CustomerTestDataFactory.createCustomer("12345678911","Maria");
 
         when(customerRepository.findAll()).thenReturn(List.of(joao,maria));
 
@@ -52,7 +52,7 @@ public class CustomerServiceTest {
 
     @Test
     void shouldReturnACustomerWhenIdExists() {
-        Customer existingCustomer = TestDataFactory.createCustomer("12345678911", "João");
+        Customer existingCustomer = CustomerTestDataFactory.createCustomer("12345678911", "João");
 
         when(customerRepository.existsById(existingCustomer.getId()))
                 .thenReturn(true);
@@ -83,7 +83,7 @@ public class CustomerServiceTest {
 
     @Test
     void shouldReturnACustomerWhenCpfExists() {
-        Customer existingCustomer = TestDataFactory.createCustomer("12345678900", "João");
+        Customer existingCustomer = CustomerTestDataFactory.createCustomer("12345678900", "João");
         UUID id = existingCustomer.getId();
 
         when(customerRepository.findById(id))
@@ -106,7 +106,7 @@ public class CustomerServiceTest {
 
     @Test
     void shouldThrowExceptionWhenCpfDoesNotExist() {
-        Customer existingCustomer = TestDataFactory.createCustomer("12345678900", "João");
+        Customer existingCustomer = CustomerTestDataFactory.createCustomer("12345678900", "João");
         String cpf = existingCustomer.getCpf();
 
         when(customerRepository.existsByCpf(existingCustomer.getCpf()))
@@ -119,13 +119,8 @@ public class CustomerServiceTest {
 
     @Test
     void shouldSaveCustomerWhenCpfDoesNotExist() {
-        CustomerRequestDTO customerRequestDTO = new CustomerRequestDTO(
-                "12345678900",
-                "João",
-                "João@gmail.com",
-                "Rua nova, 123",
-                "11999999999"
-        );
+        CustomerRequestDTO customerRequestDTO = CustomerTestDataFactory.createCustomerRequestDTO();
+
         when(customerRepository.existsByCpf(customerRequestDTO.cpf()))
                 .thenReturn(false);
 
@@ -136,12 +131,8 @@ public class CustomerServiceTest {
 
     @Test
     void shouldThrowExceptionWhenSaveWithCpfIsAlreadyRegistered() {
-        CustomerRequestDTO customerRequestDTO = new CustomerRequestDTO(
-                "12345678900",
-                "João",
-                "João@gmail.com",
-                "Rua nova, 123",
-                "11999999999");
+        CustomerRequestDTO customerRequestDTO = CustomerTestDataFactory.createCustomerRequestDTO();
+
         when(customerRepository.existsByCpf(customerRequestDTO.cpf()))
                 .thenReturn(true);
 
@@ -153,17 +144,11 @@ public class CustomerServiceTest {
 
     @Test
     void shouldUpdateCustomerWhenIdExists() {
-        Customer  existingCustomer = TestDataFactory.createCustomer("12345678900", "João");
+        Customer existingCustomer = CustomerTestDataFactory.createCustomer("12345678900", "João");
 
         when(customerRepository.findById(existingCustomer.getId()))
                 .thenReturn(Optional.of(existingCustomer));
-
-        CustomerRequestDTO customerNewData =  new CustomerRequestDTO(
-                "12345678911",
-                "João",
-                "João@gmail.com",
-                "Rua velha, 123",
-                "11999999999");
+        CustomerRequestDTO customerNewData = CustomerTestDataFactory.createCustomerRequestDTO();
 
         customerService.updateCustomer(existingCustomer.getId(), customerNewData);
 
@@ -172,18 +157,13 @@ public class CustomerServiceTest {
 
     @Test
     void shouldThrowExceptionWhenTryingToUpdateWhenIdDoesNotExist() {
-        CustomerRequestDTO customer = new CustomerRequestDTO(
-                "12345678900",
-                "João",
-                "João@gmail.com",
-                "Rua nova, 123",
-                "11999999999");
-
+        CustomerRequestDTO customerRequestDTO = CustomerTestDataFactory.createCustomerRequestDTO();
         UUID nonExistId = UUID.randomUUID();
+
         when(customerRepository.findById(nonExistId))
                 .thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> customerService.updateCustomer(nonExistId, customer))
+        assertThatThrownBy(() -> customerService.updateCustomer(nonExistId, customerRequestDTO))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Cliente com id: " + nonExistId + " não encontrado");
     }
