@@ -33,7 +33,7 @@ public class SchedulingService {
                 .toList();
     }
 
-    public Optional<SchedulingResponseDTO> findById(UUID id) {
+    public Optional<SchedulingResponseDTO> getSchedulingById(UUID id) {
         if(!schedulingRepository.existsById(id)) {
             throw  new  ResourceNotFoundException("Agendamento com o id: " + id + " não encontrado");
         }
