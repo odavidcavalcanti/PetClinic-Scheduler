@@ -31,7 +31,7 @@ public class ProvidedServiceController {
     @ResponseStatus(HttpStatus.OK)
     public Optional<ProvidedServiceResponseDTO> findById(@PathVariable UUID id) {
         return providedService
-                .findById(id);
+                .getServiceById(id);
     }
 
     @PostMapping

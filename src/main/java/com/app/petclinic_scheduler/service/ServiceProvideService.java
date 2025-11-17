@@ -33,7 +33,7 @@ public class ServiceProvideService {
                 .toList();
     }
 
-    public Optional<ProvidedServiceResponseDTO> findById(UUID id) {
+    public Optional<ProvidedServiceResponseDTO> getServiceById(UUID id) {
         if(!providedServiceRepository.existsById(id)) {
             throw new ResourceNotFoundException("Serviço com o id: " + id + " não encontrado");
         }
@@ -60,6 +60,7 @@ public class ServiceProvideService {
                 .orElseThrow(() -> new ResourceNotFoundException("Serviço com o id: " + id + " não encontrado"));
 
         existingProvideService.updateFromDTO(updateData);
+        providedServiceRepository.save(existingProvideService);
     }
 
     public void deleteProvidedService(UUID id) {
