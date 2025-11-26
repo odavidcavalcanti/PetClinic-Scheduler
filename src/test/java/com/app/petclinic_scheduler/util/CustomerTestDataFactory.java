@@ -1,6 +1,7 @@
 package com.app.petclinic_scheduler.util;
 
 import com.app.petclinic_scheduler.dto.customer.CustomerRequestDTO;
+import com.app.petclinic_scheduler.dto.customer.CustomerResponseDTO;
 import com.app.petclinic_scheduler.model.Customer;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -25,5 +26,17 @@ public class CustomerTestDataFactory {
                 "João@gmail.com",
                 "Rua nova, 123",
                 "11999999999");
+    }
+
+    public static CustomerResponseDTO createCustomerResponseDTO() {
+        return new CustomerResponseDTO(
+                UUID.randomUUID(),
+                "12345678900",
+                "João",
+                "joao@gmail.com",
+                "Rua nova, 123",
+                "11999999999",
+                new ArrayList<>()
+        );
     }
 }

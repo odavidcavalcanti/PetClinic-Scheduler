@@ -1,6 +1,7 @@
 package com.app.petclinic_scheduler.util;
 
 import com.app.petclinic_scheduler.dto.provided_services.ProvidedServiceRequestDTO;
+import com.app.petclinic_scheduler.dto.provided_services.ProvidedServiceResponseDTO;
 import com.app.petclinic_scheduler.model.ProvidedService;
 
 import java.math.BigDecimal;
@@ -22,5 +23,14 @@ public class ProvidedServiceTestDataFactory {
                 BigDecimal.valueOf(20.0),
                 30,
                 schedulingId);
+    }
+
+    public static ProvidedServiceResponseDTO createProvidedServiceResponseDTO(UUID schedulingId) {
+        return new ProvidedServiceResponseDTO(
+                UUID.randomUUID(),
+                "Banho",
+                BigDecimal.valueOf(20.0),
+                30,
+                schedulingId.toString());
     }
 }
