@@ -98,7 +98,7 @@ public class PetServiceTest {
         PetRequestDTO petRequestDTO = PetTestDataFactory.createPetRequestDTO();
         Customer existingCustomer = CustomerTestDataFactory.createCustomer("12345678900", "João");
 
-        when(customerRepository.findByCpf(existingCustomer.getCpf()))
+        when(customerRepository.getCustomerByCpf(existingCustomer.getCpf()))
                 .thenReturn(Optional.of(existingCustomer));
 
         petService.savePet(petRequestDTO);
@@ -110,7 +110,7 @@ public class PetServiceTest {
         PetRequestDTO petRequestDTO = PetTestDataFactory.createPetRequestDTO();
         String nonExistCpf = "12345678900";
 
-        when(customerRepository.findByCpf(nonExistCpf))
+        when(customerRepository.getCustomerByCpf(nonExistCpf))
                 .thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> petService.savePet(petRequestDTO))

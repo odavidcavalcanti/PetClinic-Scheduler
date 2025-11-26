@@ -60,7 +60,7 @@ public class CustomerServiceTest {
         when(customerRepository.findById(existingCustomer.getId()))
                 .thenReturn(Optional.of(existingCustomer));
 
-        Optional<CustomerResponseDTO> result = customerService.findById(existingCustomer.getId());
+        Optional<CustomerResponseDTO> result = customerService.getCustomerById(existingCustomer.getId());
 
         verify(customerRepository).existsById(existingCustomer.getId());
         verify(customerRepository).findById(existingCustomer.getId());
@@ -76,7 +76,7 @@ public class CustomerServiceTest {
         when(customerRepository.existsById(nonExistId))
                 .thenReturn(false);
 
-        assertThatThrownBy(() -> customerService.findById(nonExistId))
+        assertThatThrownBy(() -> customerService.getCustomerById(nonExistId))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Cliente com id: " + nonExistId + " não encontrado");
     }
@@ -91,7 +91,7 @@ public class CustomerServiceTest {
         when(customerRepository.existsById(id))
                 .thenReturn(true);
 
-        Optional<CustomerResponseDTO> result = customerService.findById(id);
+        Optional<CustomerResponseDTO> result = customerService.getCustomerById(id);
 
         verify(customerRepository).existsById(id);
         verify(customerRepository).findById(id);
@@ -112,7 +112,7 @@ public class CustomerServiceTest {
         when(customerRepository.existsByCpf(existingCustomer.getCpf()))
                 .thenReturn(false);
 
-        assertThatThrownBy(() -> customerService.findByCpf(existingCustomer.getCpf()))
+        assertThatThrownBy(() -> customerService.getCustomerByCpf(existingCustomer.getCpf()))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Cliente com cpf: " + cpf + " não encontrado");
     }
