@@ -45,7 +45,7 @@ public class  PetService {
        String customerCpf = petData.customerCpf();
 
         Customer customer = customerRepository
-                .findByCpf(customerCpf)
+                .getCustomerByCpf(customerCpf)
                 .orElseThrow(() -> new BussinesException(
                         "Cliente com o cpf: " + customerCpf + " não encontrado"));
 

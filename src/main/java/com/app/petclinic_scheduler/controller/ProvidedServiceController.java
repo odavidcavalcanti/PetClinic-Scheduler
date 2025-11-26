@@ -49,7 +49,7 @@ public class ProvidedServiceController {
     }
 
     @DeleteMapping("/{id}")
-        public void deleteProvidedService (@PathVariable UUID id, @RequestBody ProvidedServiceRequestDTO providedServiceRequestDTO) {
+        public void deleteProvidedService (@PathVariable UUID id) {
         providedService
                 .deleteProvidedService(id);
     }

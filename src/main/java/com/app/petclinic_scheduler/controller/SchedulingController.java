@@ -29,7 +29,7 @@ public class SchedulingController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<SchedulingResponseDTO> findById(@PathVariable UUID id) {
+    public Optional<SchedulingResponseDTO> getSchedulingById(@PathVariable UUID id) {
         return schedulingService
                 .getSchedulingById(id);
     }

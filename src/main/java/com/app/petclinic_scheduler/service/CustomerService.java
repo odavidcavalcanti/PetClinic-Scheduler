@@ -27,7 +27,7 @@ public class CustomerService {
                         .map(CustomerSummaryDTO::new).toList();
     }
 
-    public Optional<CustomerResponseDTO> findById(UUID id) {
+    public Optional<CustomerResponseDTO> getCustomerById(UUID id) {
         if (!customerRepository.existsById(id)) {
             throw new ResourceNotFoundException("Cliente com id: " + id + " não encontrado");
         }
@@ -37,13 +37,13 @@ public class CustomerService {
                 .map(CustomerResponseDTO::new);
     }
 
-    public Optional<CustomerResponseDTO> findByCpf(String cpf) {
+    public Optional<CustomerResponseDTO> getCustomerByCpf(String cpf) {
         if (!customerRepository.existsByCpf(cpf)) {
             throw new ResourceNotFoundException("Cliente com cpf: " + cpf + " não encontrado");
         }
 
         return customerRepository
-                .findByCpf(cpf)
+                .getCustomerByCpf(cpf)
                 .map(CustomerResponseDTO::new);
     }
 

@@ -31,14 +31,14 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.OK)
     public Optional<CustomerResponseDTO> findById(@PathVariable UUID id) {
         return customerService
-                .findById(id);
+                .getCustomerById(id);
     }
 
     @GetMapping("/cpf/{cpf}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<CustomerResponseDTO> findByCpf(@PathVariable String cpf) {
         return customerService
-                .findByCpf(cpf);
+                .getCustomerByCpf(cpf);
     }
 
     @PostMapping
