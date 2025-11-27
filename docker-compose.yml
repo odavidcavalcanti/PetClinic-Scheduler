@@ -1,0 +1,39 @@
+services:
+  api:
+    build: .
+    container_name: petclinic_api
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/petclinic
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: pass123
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    container_name: petclinic_db
+    environment:
+      POSTGRES_DB: petclinic
+      POSTGRES_USERNAME: admin
+      POSTGRES_PASSWORD: pass123
+    ports:
+      - "5432:5432"
+    volumes:
+      - "pgdata:/var/lib/postgresql/data"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: petclinic_pgadmin
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
