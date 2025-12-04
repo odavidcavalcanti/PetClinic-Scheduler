@@ -9,6 +9,8 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: pass123
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      JAVA_OPTS: "-Xms256m -Xmx512m"
+    command: ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
     depends_on:
       - db
 
@@ -17,7 +19,7 @@ services:
     container_name: petclinic_db
     environment:
       POSTGRES_DB: petclinic
-      POSTGRES_USERNAME: admin
+      POSTGRES_USER: admin
       POSTGRES_PASSWORD: pass123
     ports:
       - "5432:5432"
