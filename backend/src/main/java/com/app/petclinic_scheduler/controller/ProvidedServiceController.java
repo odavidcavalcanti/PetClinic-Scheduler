@@ -49,6 +49,7 @@ public class ProvidedServiceController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
         public void deleteProvidedService (@PathVariable UUID id) {
         providedService
                 .deleteProvidedService(id);
